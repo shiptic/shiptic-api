@@ -1,13 +1,8 @@
 from django.urls import include, path
-#from rest_framework import routers
 from django.contrib import admin
 
-#from tutorial.quickstart import views
-
-#router = routers.DefaultRouter()
-#router.register(r'users', views.UserViewSet)
-
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.accounts import views as account_views
 
@@ -20,6 +15,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    path('', include(router.urls)),
+    #path('', include(router.urls)),
+    path('auth/register', account_views.RegisterUserView.as_view(), name='register'),
+    path('auth/login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 
 ]
