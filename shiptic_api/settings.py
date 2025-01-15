@@ -30,7 +30,7 @@ if os.environ.get('ELASTIC_BEANSTALK'):
 else:
     DEBUG = True
 DEBUG = True
-ALLOWED_HOSTS = ['shipticapi-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['shipticapi-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
