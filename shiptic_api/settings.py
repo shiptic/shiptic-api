@@ -25,9 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(4vh0!di+1nwrwap7-1zm*3wmj)=#a5c$327kxl)w(^h30-ts^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('ELASTIC_BEANSTALK'):
+    DEBUG = False
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = ['ShipticAPI-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com ']
+ALLOWED_HOSTS = ['shipticapi-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com']
 
 
 # Application definition
