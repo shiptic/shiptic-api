@@ -29,8 +29,11 @@ if os.environ.get('ELASTIC_BEANSTALK'):
     DEBUG = False
 else:
     DEBUG = True
-DEBUG = True
-ALLOWED_HOSTS = ['shipticapi-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com', '127.0.0.1']
+
+ALLOWED_HOSTS = [
+    'shipticapi-env-1.eba-2tsj7wnp.us-east-2.elasticbeanstalk.com',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -64,6 +67,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'http://shiptic-frontend.s3-website.us-east-2.amazonaws.com',
     'http://localhost:5173',
 ]
 
