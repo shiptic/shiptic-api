@@ -66,11 +66,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://shiptic-frontend.s3-website.us-east-2.amazonaws.com',
-    'http://localhost:5173',
-]
-
 ROOT_URLCONF = 'shiptic_api.urls'
 
 TEMPLATES = [
@@ -173,3 +168,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://shiptic-frontend.s3-website.us-east-2.amazonaws.com',
+    'http://localhost:5173',
+]
