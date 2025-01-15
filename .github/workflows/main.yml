@@ -1,0 +1,22 @@
+name: Deploy to AWS Beanstalk
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: [3.12.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Django aws eb deployment
+      uses: joel-hanson/django-aws-eb-deploy@V1.1
+      with:
+        python_version: ${{ matrix.python_version }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        django_path: shiptic_api
+        unit_testing: false
+        deploy: true
+        min_coverage: 0
+        postgresql_required: true
+        security_check: false
