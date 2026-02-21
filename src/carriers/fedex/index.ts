@@ -1,8 +1,8 @@
-import { Carrier } from "../base/carrier.interface";
-import { GetRatesInput, GetRatesOutput } from "../base/types";
-import { FedExAuth } from "./auth";
-import { getRatesRequest } from "./client";
-import { mapRatesResponse } from "./mapper";
+import { Carrier } from "@/carriers/base/carrier.interface";
+import { GetRatesInput, GetRatesOutput } from "@/carriers/base/types";
+import { FedExAuth } from "@/carriers/fedex/auth";
+import { getRatesRequest } from "@/carriers/fedex/client";
+import { mapRatesResponse } from "@/carriers/fedex/mapper";
 
 const auth = new FedExAuth();
 

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
-import shipmentsRoute from "./routes/shipments.route";
-import healthRoute from "./routes/health.route";
+import shipmentsRoute from "@/routes/shipments.route";
+import healthRoute from "@/routes/health.route";
 
 const app = express();
 

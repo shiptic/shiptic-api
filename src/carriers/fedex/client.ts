@@ -1,6 +1,6 @@
 import axios from "axios";
-import { GetRatesInput } from "../base/types";
-import { Rates } from "./rate_types";
+import { GetRatesInput } from "@/carriers/base/types";
+import { Rates } from "@/carriers/fedex/rate_types";
 
 export async function getRatesRequest(
   input: GetRatesInput,

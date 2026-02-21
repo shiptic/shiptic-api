@@ -1,4 +1,4 @@
-import { fedexCarrier } from "./fedex";
+import { fedexCarrier } from "@/carriers/fedex";
 
 export const carrierRegistry = {
   fedex: fedexCarrier,

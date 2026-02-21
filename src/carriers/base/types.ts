@@ -1,7 +1,7 @@
 /**
  * Generic types for all carrier req/res
  */
-import { CarrierType } from "../registry";
+import { CarrierType } from "@/carriers/registry";
 
 export interface Address {
   name: string;
