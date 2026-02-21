@@ -26,7 +26,6 @@ interface RequestedShipment {
     shipDateStamp?: string;
     pickupType: "CONTACT_FEDEX_TO_SCHEDULE" | "DROPOFF_AT_FEDEX_LOCATION" | "USE_SCHEDULED_PICKUP";
     requestedPackageLineItems: Array<RequestedPackageLineItem>;
-
     documentShipment?: boolean;
     variableHandlingChargeDetail?: VariableHandlingChargeDetail;
     packagingType?: string;
