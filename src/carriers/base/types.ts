@@ -40,4 +40,10 @@ export interface GetTrackingByTrackingNumberInput {
 export interface GetTrackingByTrackingNumberOutput {
   trackingNumber: string;
   distance: string;
+  alerts: Array<Alert>;
+}
+
+interface Alert {
+  code: string;
+  message: string;
 }

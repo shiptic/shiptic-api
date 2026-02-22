@@ -19,11 +19,13 @@ export function mapRatesResponse(raw: any): GetRatesOutput {
 
 export function mapTrackingByTrackingNumberResponse(raw: any): GetTrackingByTrackingNumberOutput {
   const trackingReply = raw.output?.completeTrackResults || [];
-  console.log("Tracking Reply:", trackingReply);
+
+  console.log("Alerts:", raw.output?.alerts);
 
   const tracking = trackingReply.map((detail: any) => ({
     trackingNumber: detail?.trackingNumber,
     distance: detail?.trackResults?.[0]?.distanceToDestination?.value,
+    alerts: raw.output?.alerts,
   }));
 
   return tracking;
