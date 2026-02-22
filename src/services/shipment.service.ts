@@ -1,5 +1,5 @@
 import { carrierRegistry } from "@/carriers/registry";
-import { GetRatesInput, GetTrackingByTrackingNumberInput } from "@/carriers/base/types";
+import { GetRatesInput, GetTrackingByTrackingNumberInput } from "@/types/base.types";
 
 export async function getRates(input: GetRatesInput) {
   const carrier = carrierRegistry[input.carrier];

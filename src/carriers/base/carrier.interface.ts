@@ -1,7 +1,7 @@
 /**
  * Generic interface for a carrier.
  */
-import { GetRatesInput, GetRatesOutput, GetTrackingByTrackingNumberInput, GetTrackingByTrackingNumberOutput } from "@/carriers/base/types";
+import { GetRatesInput, GetRatesOutput, GetTrackingByTrackingNumberInput, GetTrackingByTrackingNumberOutput } from "@/types/base.types";
 
 export interface Carrier {
   getRates(input: GetRatesInput): Promise<GetRatesOutput>;

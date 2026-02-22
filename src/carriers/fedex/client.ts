@@ -1,110 +1,35 @@
-import axios from "axios";
-import { GetRatesInput, GetTrackingByTrackingNumberInput } from "../base/types";
-import { Rates } from "./rate_types";
-import { TrackingByTrackingNumber } from "./tracking.types";
+import axios, { AxiosInstance } from "axios";
+import { CarrierApiError } from "@/errors/carrierapi.error";
 
-export async function getRatesRequest(
-  input: GetRatesInput,
-  token: string
-) {
-  const payload: Rates = {
-    accountNumber: {
-      value: process.env.FEDEX_ACCOUNT_NUMBER,
-    },
-    rateRequestControlParameters: {
-      returnTransitTimes: true,
-    },
-    requestedShipment: {
-      shipper: {
-        address: {
-          streetLines: [input.fromAddress.street],
-          city: input.fromAddress.city,
-          stateOrProvinceCode: input.fromAddress.state,
-          postalCode: input.fromAddress.zip,
-          countryCode: input.fromAddress.country || "US",
-          residential: false
-        }
+export class FedExClient {
+  private client: AxiosInstance;
+
+  constructor(token: string) {
+    this.client = axios.create({
+      baseURL: "https://apis-sandbox.fedex.com",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      recipient: {
-        address: {
-          streetLines: [input.toAddress.street],
-          city: input.toAddress.city,
-          stateOrProvinceCode: input.toAddress.state,
-          postalCode: input.toAddress.zip,
-          countryCode: input.toAddress.country || "US"
-        }
-      },
-      preferredCurrency: "USD",
-      rateRequestType: ["ACCOUNT"],
-      pickupType: "DROPOFF_AT_FEDEX_LOCATION",
-      shipDateStamp: new Date().toISOString().split("T")[0],
-      requestedPackageLineItems: [
-        {
-          weight: {
-            units: "LB",
-            value: input.weight,
-          }
-        },
-      ],
-      packagingType: "YOUR_PACKAGING",
-    },
-    processingOptions: ["INCLUDE_PICKUPRATES"],
-    carrierCodes: ["FDXE", "FDXG"]
-  };
-
-  try {
-    const response = await axios.post(
-      "https://apis-sandbox.fedex.com/rate/v1/rates/quotes",
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return response.data;
-
-  } catch (error: any) {
-    console.error("FEDEX ERROR:");
-    console.error(JSON.stringify(error.response?.data, null, 2));
-    throw error;
+    });
   }
-}
 
-export async function getTrackingByTrackingNumberRequest(
-  input: GetTrackingByTrackingNumberInput,
-  token: string
-) {
-  const payload: TrackingByTrackingNumber = {
-    includeDetailedScans: false,
-    trackingInfo: [
-      {
-        trackingNumberInfo: {
-          trackingNumber: input.trackingNumber,
-        }
-      }
-    ]
-  };
+  async post<TResponse>(
+    url: string,
+    payload: unknown
+  ): Promise<TResponse> {
+    try {
+      const response = await this.client.post<TResponse>(url, payload);
+      return response.data;
+    } catch (error: any) {
+      const status = error.response?.status ?? 500;
+      const data = error.response?.data;
 
-  try {
-    const response = await axios.post(
-      "https://apis-sandbox.fedex.com/track/v1/trackingnumbers",
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return response.data;
-
-  } catch (error: any) {
-    console.error("FEDEX TRACKING ERROR:");
-    console.error(JSON.stringify(error.response?.data, null, 2));
-    throw error;
+      throw new CarrierApiError(
+        data?.errors?.[0]?.message || "FedEx API Error",
+        status,
+        data
+      );
+    }
   }
 }
