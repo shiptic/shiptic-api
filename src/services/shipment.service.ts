@@ -1,5 +1,5 @@
 import { carrierRegistry } from "@/carriers/registry";
-import { GetRatesInput } from "@/carriers/base/types";
+import { GetRatesInput, GetTrackingByTrackingNumberInput } from "@/carriers/base/types";
 
 export async function getRates(input: GetRatesInput) {
   const carrier = carrierRegistry[input.carrier];
@@ -9,4 +9,14 @@ export async function getRates(input: GetRatesInput) {
   }
 
   return carrier.getRates(input);
+}
+
+export async function getTrackingByTrackingNumber(input: GetTrackingByTrackingNumberInput) {
+  const carrier = carrierRegistry[input.carrier];
+
+  if (!carrier) {
+    throw new Error("Unsupported carrier");
+  }
+
+  return carrier.getTrackingByTrackingNumber(input);
 }

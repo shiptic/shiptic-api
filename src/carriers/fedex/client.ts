@@ -1,6 +1,7 @@
 import axios from "axios";
-import { GetRatesInput } from "@/carriers/base/types";
-import { Rates } from "@/carriers/fedex/rate_types";
+import { GetRatesInput, GetTrackingByTrackingNumberInput } from "../base/types";
+import { Rates } from "./rate_types";
+import { TrackingByTrackingNumber } from "./tracking.types";
 
 export async function getRatesRequest(
   input: GetRatesInput,
@@ -67,6 +68,42 @@ export async function getRatesRequest(
 
   } catch (error: any) {
     console.error("FEDEX ERROR:");
+    console.error(JSON.stringify(error.response?.data, null, 2));
+    throw error;
+  }
+}
+
+export async function getTrackingByTrackingNumberRequest(
+  input: GetTrackingByTrackingNumberInput,
+  token: string
+) {
+  const payload: TrackingByTrackingNumber = {
+    includeDetailedScans: false,
+    trackingInfo: [
+      {
+        trackingNumberInfo: {
+          trackingNumber: input.trackingNumber,
+        }
+      }
+    ]
+  };
+
+  try {
+    const response = await axios.post(
+      "https://apis-sandbox.fedex.com/track/v1/trackingnumbers",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+
+  } catch (error: any) {
+    console.error("FEDEX TRACKING ERROR:");
     console.error(JSON.stringify(error.response?.data, null, 2));
     throw error;
   }

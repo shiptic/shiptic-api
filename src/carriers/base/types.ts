@@ -3,6 +3,7 @@
  */
 import { CarrierType } from "@/carriers/registry";
 
+// Rates
 export interface Address {
   name: string;
   street: string;
@@ -28,4 +29,15 @@ export interface Rate {
 
 export interface GetRatesOutput {
   rates: Rate[];
+}
+
+// Tracking
+export interface GetTrackingByTrackingNumberInput {
+  carrier: CarrierType;
+  trackingNumber: string;
+}
+
+export interface GetTrackingByTrackingNumberOutput {
+  trackingNumber: string;
+  distance: string;
 }
